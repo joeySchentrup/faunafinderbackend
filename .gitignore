@@ -1,1 +1,7 @@
+<<<<<<< HEAD
 *deer_data/*
+=======
+/build/
+/target/
+/.metadata/
+>>>>>>> 828f4ddb72597a5ff714fcbd4a8165481dab92cd
