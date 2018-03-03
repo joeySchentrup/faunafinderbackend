@@ -1,8 +1,5 @@
 package faunafinderbackend;
- 
-/**
- * @author Crunchify
- */
+
  
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
