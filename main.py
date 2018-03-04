@@ -162,7 +162,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=1):
             for data in dataloaders[phase]:
                 # get the inputs
                 inputs, labels = data
-                print(labels)
+
                 # wrap them in Variable
                 if use_gpu:
                     inputs = Variable(inputs.cuda())
