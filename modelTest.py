@@ -14,25 +14,11 @@ import time
 import os
 import copy
 
-'''
-data_dir = 'deer_data'
-image_datasets = datasets.ImageFolder(os.path.join(data_dir, 'val'), data_transforms['val'])
-dataloaders = torch.utils.data.DataLoader(image_datasets, batch_size=4, shuffle=True, num_workers=4)
-
-dataset_sizes = len(image_datasets)
-class_names = image_datasets.classes
-'''
-
+loader = transforms.Compose([transforms.ToTensor()])
 use_gpu = torch.cuda.is_available()
 
 def check_data(model, data):
     model.train(False)  # Set model to evaluate mode
-
-    # wrap them in Variable
-    if use_gpu:
-        data = Variable(data.cuda())
-    else:
-        data = Variable(data)
 
     # forward
     outputs = model(data)
@@ -41,24 +27,22 @@ def check_data(model, data):
     return preds
 
 model_ft = torch.load("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/output.out")
-
-imsize = 256
-loader = transforms.Compose([transforms.Scale(imsize), transforms.ToTensor()])
-
-def image_loader(image_name):
-    """load image, returns cuda tensor"""
-    image = Image.open(image_name)
-    image = loader(image).float()
-    image = Variable(image, requires_grad=True)
-    image = image.unsqueeze(0)  #this is for VGG, may not be needed for ResNet
-    if use_gpu:
-        return image.cuda()
-    else:
-        return image
-
-image = image_loader("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/deer_data/train/deer/3.jpg")
-
 if use_gpu:
     model_ft = model_ft.cuda()
+
+loader = transforms.Compose([
+    transforms.RandomResizedCrop(224),
+        transforms.RandomHorizontalFlip(),
+        transforms.ToTensor(),
+        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])]) 
+
+def image_loader(image_name):
+    image = Image.open(image_name)
+    image = Variable(loader(image))
+    # fake batch dimension required to fit network's input dimensions
+    image = image.unsqueeze(0)
+    return image
+
+image = image_loader("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/deer_data/train/not-deer/0100.jpg")
 
 print(check_data(model_ft, image))
