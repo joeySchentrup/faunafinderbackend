@@ -23,10 +23,12 @@ def check_data(model, data):
     # forward
     outputs = model(data)
     _, preds = torch.max(outputs.data, 1)
+    
+    preds_str = str(preds)
+    preds_str = preds_str.strip()
+    return preds_str[:-29]
 
-    return preds
-
-model_ft = torch.load("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/output.out")
+model_ft = torch.load("/root/faunafinderbackend/output.out")
 if use_gpu:
     model_ft = model_ft.cuda()
 
@@ -43,6 +45,6 @@ def image_loader(image_name):
     image = image.unsqueeze(0)
     return image
 
-image = image_loader("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/deer_data/train/not-deer/0100.jpg")
+image = image_loader("/root/pic/img.jpg")
 
 print(check_data(model_ft, image))
