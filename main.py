@@ -284,7 +284,7 @@ torch.save(model_ft, "/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/outp
 
 visualize_model(model_ft)
 
-'''
+
 ######################################################################
 # ConvNet as fixed feature extractor
 # ----------------------------------
@@ -334,6 +334,6 @@ model_conv = train_model(model_conv, criterion, optimizer_conv,
 #
 
 visualize_model(model_conv)
-'''
+
 plt.ioff()
 plt.show()

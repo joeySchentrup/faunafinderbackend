@@ -28,22 +28,17 @@ use_gpu = torch.cuda.is_available()
 def check_data(model, data):
     model.train(False)  # Set model to evaluate mode
 
-    # get the inputs
-    inputs, labels = data
-
     # wrap them in Variable
     if use_gpu:
-        inputs = Variable(inputs.cuda())
-        labels = Variable(labels.cuda())
+        data = Variable(data.cuda())
     else:
-        inputs = Variable(inputs)
-        labels = Variable(labels)
+        data = Variable(data)
 
     # forward
-    outputs = model(inputs)
+    outputs = model(data)
     _, preds = torch.max(outputs.data, 1)
-    
-    return preds == labels.data
+
+    return preds
 
 model_ft = torch.load("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/output.out")
 
@@ -61,7 +56,7 @@ def image_loader(image_name):
     else:
         return image
 
-image = image_loader("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/deer_data/train/deer/3")
+image = image_loader("/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/deer_data/train/deer/3.jpg")
 
 if use_gpu:
     model_ft = model_ft.cuda()
