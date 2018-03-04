@@ -42,6 +42,7 @@ import time
 import os
 import copy
 
+plt.switch_backend('agg')
 plt.ion()   # interactive mode
 
 ######################################################################
@@ -136,7 +137,7 @@ imshow(out, title=[class_names[x] for x in classes])
 # ``torch.optim.lr_scheduler``.
 
 
-def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
+def train_model(model, criterion, optimizer, scheduler, num_epochs=1):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -161,7 +162,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs=25):
             for data in dataloaders[phase]:
                 # get the inputs
                 inputs, labels = data
-
+                print(labels)
                 # wrap them in Variable
                 if use_gpu:
                     inputs = Variable(inputs.cuda())
@@ -275,14 +276,15 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=7, gamma=0.1)
 #
 
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
-                       num_epochs=25)
+                       num_epochs=1)
+torch.save(model_ft, "/mnt/c/Users/j03y/Desktop/Projects/faunafinderbackend/output.out")
 
 ######################################################################
 #
 
 visualize_model(model_ft)
 
-
+'''
 ######################################################################
 # ConvNet as fixed feature extractor
 # ----------------------------------
@@ -326,12 +328,12 @@ exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=7, gamma=0.1)
 #
 
 model_conv = train_model(model_conv, criterion, optimizer_conv,
-                         exp_lr_scheduler, num_epochs=25)
+                         exp_lr_scheduler, num_epochs=1)
 
 ######################################################################
 #
 
 visualize_model(model_conv)
-
+'''
 plt.ioff()
 plt.show()
