@@ -45,6 +45,6 @@ def image_loader(image_name):
     image = image.unsqueeze(0)
     return image
 
-image = image_loader("./img.jpg")
+image = image_loader("./fileToAnalyze.jpg")
 
 print(check_data(model_ft, image))
