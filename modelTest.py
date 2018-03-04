@@ -28,7 +28,7 @@ def check_data(model, data):
     preds_str = preds_str.strip()
     return preds_str[:-29]
 
-model_ft = torch.load("/root/faunafinderbackend/output.out")
+model_ft = torch.load("./output.out")
 if use_gpu:
     model_ft = model_ft.cuda()
 
@@ -45,6 +45,6 @@ def image_loader(image_name):
     image = image.unsqueeze(0)
     return image
 
-image = image_loader("/root/pic/img.jpg")
+image = image_loader("./img.jpg")
 
 print(check_data(model_ft, image))
